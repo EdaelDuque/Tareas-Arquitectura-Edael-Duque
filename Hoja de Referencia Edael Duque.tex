@@ -1,0 +1,109 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+% Configuración de página
+\geometry{margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Edael Duque C.I. 30800814}
+\lhead{Hoja de Referencia para Mips32}
+\rfoot{Página \thepage}
+
+% Formato de secciones
+\titleformat{\section}[block]{\large\bfseries\filcenter}{}{1em}{}
+\titleformat{\subsection}[block]{\normalsize\bfseries}{}{0em}{}
+
+\begin{document}
+
+% Título
+\begin{center}
+    \textbf{\LARGE Hoja de Referencia para Mips32} \\
+    \vspace{0.5cm}
+    \large Edael Duque C.I. 30800814 \\
+
+\section*{Instrucciones Fundamentales de Mips32}
+
+
+\subsection*{Para registros:}
+
+\begin{itemize}
+    \item \textbf{\$zero y \$0 (Register 0):} Contiene valor 0 permanente (No puede escribirse sobre él). Tiene usos como inicialización de registros, también se usa en operaciones donde el 0 es requerido.
+    
+    \item \textbf{\$at (Assembler Temporary):} Se reserva para el ensamblador y está restringido para el programador, traduce las pseudo instrucciones a través de una conversión.
+    
+    \item \textbf{\$v0 y \$v1 (Value):} Su uso reside en el retorno de valores de funciones. \$v0 como registro principal para el valor que retorna y como respaldo para un segundo valor se usa \$v1 en casos donde el problema lo amerite.
+    
+    \item \textbf{De \$a0 hasta \$a3 (Argument):} Se utilizan como los primeros cuatro argumentos de una función.
+    
+    \item \textbf{De \$t0 hasta \$t9 (Temporary):} Su utilidad consiste en almacenar valores que no necesitan ser almacenados durante las llamadas a una función, por eso su nombre de temporales.
+    
+    \item \textbf{De \$s0 hasta \$s7 (Saved):} Registros de guardado con función de almacenar valores que es menester guardar para el problema en cuestión durante las llamadas de funciones.
+    
+    \item \textbf{\$k0 y \$k1 (Kernel):} Se reservan para el sistema operativo.
+    
+    \item \textbf{\$gp (Global Pointer):} Es un puntero para los datos globales. Para acceder con mayor facilidad a variables globales y estáticas.
+    
+    \item \textbf{\$sp (Stack Pointer):} Puntero para la pila, se encarga de apuntar al tope de la pila con el objeto de gestionar su marco de llamadas a funciones.
+    
+    \item \textbf{\$fp (Frame Pointer):} Puntero de marco. Apunta a una posición fija dentro del marco de la pila actual. No se usa con tanta frecuencia.
+    
+    \item \textbf{\$ra (Return Address):} Es una dirección de retorno. Se encarga de almacenar una dirección de la instrucción seguido de una llamada a función en condición de jal.
+\end{itemize}
+
+\subsection*{Para las operaciones aritméticas:}
+
+\begin{itemize}
+    \item \textbf{add:} para sumar dos registros y guardar el valor en un tercer registro.
+    \item \textbf{sub (subtract):} para restar dos registros y guardarlo en un tercer registro.
+\end{itemize}
+
+\subsection*{Para la transferencia de datos:}
+
+\begin{itemize}
+    \item \textbf{lw (load word):} Mueve una palabra de una dirección a un registro.
+    \item \textbf{sw (store word):} Mueve una palabra de un registro a una dirección.
+    \item \textbf{lh (load half):} Carga la mitad de una palabra de memoria a un registro.
+    \item \textbf{sh (store half):} Carga la mitad de una palabra de un registro a memoria.
+    \item \textbf{lb (load byte):} Carga un byte de memoria a un registro.
+    \item \textbf{sb (store byte):} Carga un byte de un registro a memoria.
+    \item \textbf{lui (load upper immediate):} carga un valor constante de 16 bits en la parte superior de un registro.
+\end{itemize}
+
+\subsection*{Para operaciones lógicas}
+
+\begin{itemize}
+    \item \textbf{and:} Trabaja bit por bit en tres registros, utiliza una compuerta AND.
+    \item \textbf{or:} Trabaja bit por bit en tres registros, utiliza una compuerta OR.
+    \item \textbf{not:} trabaja bit por bit en un registro, utiliza una compuerta NOT.
+    \item \textbf{ori (or immediate):} variante de or que maneja bit por bit un registro y una constante, utiliza también una compuerta OR.
+    \item \textbf{sll (shift left logical):} es un desplazamiento lógico hacia la izquierda de bit multiplicado a una constante.
+    \item \textbf{srl (shift right logical):} es un desplazamiento lógico hacia la derecha de bits multiplicado por una constante.
+\end{itemize}
+
+\subsection*{Para el salto condicional:}
+
+\begin{itemize}
+    \item \textbf{beq (branch on equal):} Comprueba si dos registros son iguales y salta si lo son.
+    \item \textbf{bne (branch on not equal):} Comprueba si dos registros no son iguales y salta si no lo son.
+    \item \textbf{slt (set on less than):} Compara si el primer registro es menor que el segundo, y pone 1 en un registro destino si es verdad, 0 si es falso.
+    \item \textbf{slti (set on less than immediate):} Compara si un registro es menor que una constante, y pone 1 en un registro destino si es verdad, 0 si es falso.
+\end{itemize}
+
+\subsection*{Para el salto incondicional:}
+
+\begin{itemize}
+    \item \textbf{j (jump):} Salta a una dirección de destino especificada.
+    \item \textbf{jr (jump register):} Salta a la dirección contenida en un registro (comúnmente usado para retornar de un procedimiento).
+    \item \textbf{jal (jump and link):} Salta a una dirección de destino y guarda la dirección de retorno (la siguiente instrucción) en el registro \$ra (usado para llamadas a procedimientos).
+\end{itemize}
+
+\end{document}
