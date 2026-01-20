@@ -1,0 +1,95 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+
+\title{Informe de Proyecto: Estación de Trabajo de Alto Rendimiento para Animación 3D en Blender}
+\author{Santiago Escalona Marcano (C.I. 31768925) \\ Edael Duque González (C.I. 30800814)}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Datos del Proyecto}
+\begin{tabular}{p{4cm} p{10cm}}
+    \textbf{Presupuesto Asignado:} & \$3,000 USD \\
+    \textbf{Objetivo:} & Diseñar una arquitectura computacional optimizada para Animación 3D, Renderizado y Simulación, priorizando la afinidad de componentes y la eliminación de cuellos de botella. \\
+\end{tabular}
+
+\section{Componentes}
+
+\subsection{CPU}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Componente:} \href{https://www.amazon.com/s?k=amd+ryzen+9+7950x}{AMD Ryzen 9 7950X}
+    \item \textbf{Especificaciones:} 16 Núcleos / 32 Hilos, hasta 5.7 GHz.
+    \item \textbf{Precio Estimado:} \$480 - \$530 USD
+    \item \textbf{Justificación:} Para animación 3D se requiere un procesador híbrido: necesita un alto rendimiento en \textit{single-core} para el modelado en tiempo real (viewport) y un alto rendimiento \textit{multi-core} para el renderizado final. El 7950X es actualmente el líder en este equilibrio costo-beneficio.
+\end{itemize}
+
+\subsection{GPU}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Componente:} \href{https://www.amazon.com/s?k=rtx+4080+super}{NVIDIA GeForce RTX 4080 Super}
+    \item \textbf{Especificaciones:} 16GB GDDR6X, Arquitectura Ada Lovelace.
+    \item \textbf{Precio Estimado:} \$999 - \$1,050 USD
+    \item \textbf{Justificación:} La industria del 3D (motores como Blender Cycles, Redshift, Octane) está estandarizada sobre la tecnología CUDA de NVIDIA. 16GB de VRAM es el estándar mínimo profesional para evitar cuellos de botella en escenas complejas.
+\end{itemize}
+
+\subsection{RAM}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Componente:} \href{https://www.amazon.com/s?k=gskill+trident+z5+neo+64gb+6000+cl30}{G.SKILL Trident Z5 Neo RGB 64GB (2x32GB)}
+    \item \textbf{Especificaciones:} DDR5-6000 MT/s, Latencia CL30.
+    \item \textbf{Precio Estimado:} \$210 - \$230 USD
+    \item \textbf{Justificación:} 64GB es necesario para mantener cargadas escenas complejas y múltiples programas (Workflow: 3D + Postproducción). Se eligió la serie \textit{Neo} por su certificación AMD EXPO, garantizando estabilidad.
+\end{itemize}
+
+\subsection{Placa Base (Motherboard)}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Componente:} \href{https://www.amazon.com/s?k=asus+proart+x670e+creator}{ASUS ProArt X670E-CREATOR WIFI}
+    \item \textbf{Especificaciones:} Chipset X670E, PCIe 5.0, 10Gb Ethernet.
+    \item \textbf{Precio Estimado:} \$420 - \$450 USD
+    \item \textbf{Justificación:} La serie ProArt está diseñada para estabilidad 24/7 bajo carga máxima. Incluye conectividad de 10GbE para transferir archivos pesados a servidores rápidamente.
+\end{itemize}
+
+\subsection{Almacenamiento}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Para el sistema operativo:} \href{https://www.amazon.com/s?k=samsung+990+pro+2tb}{Samsung 990 PRO 2TB} (\$170 USD aprox.)
+    \item \textbf{Para los datos (proyecto):} \href{https://www.amazon.com/s?k=wd+black+sn850x+2tb}{WD Black SN850X 2TB} (\$160 USD aprox.)
+    \item \textbf{Justificación:} Arquitectura de almacenamiento dividido: Un disco dedicado exclusivamente al Sistema Operativo y Software, y otro dedicado exclusivamente a los archivos del proyecto (Caché/Render). Esto evita la contención de lectura/escritura.
+\end{itemize}
+
+\subsection{Fuente de Alimentación y Refrigeración}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Fuente:} \href{https://www.amazon.com/s?k=seasonic+vertex+gx+1000}{Seasonic Vertex GX-1000 (ATX 3.0)} (\$190 aprox.)
+    \item \textbf{Refrigeración:} \href{https://www.amazon.com/s?k=arctic+liquid+freezer+iii+360}{Arctic Liquid Freezer III 360} (\$105 USD aprox.)
+    \item \textbf{Justificación:} Seasonic garantiza energía limpia y estable para proteger la inversión. La refrigeración líquida de 360mm es obligatoria para disipar el calor generado por el Ryzen 9 7950X en cargas de render prolongadas.
+\end{itemize}
+
+\subsection{Pantalla}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Componente:} \href{https://a.co/d/dWjl9qG}{Samsung Monitor Essential de 24" (S30GD)} (\$125 aprox.)
+    \item \textbf{Justificación:} Se necesita un monitor con un enfoque de diseño, este monitor es el apropiado ya que posee gran tasa de refresco para analizar con mayor capacidad la fluidez de las animaciones. Agregado a su proyección de luz con enfoque en el cuidado de ojos, perfecto para diseñadores.
+\end{itemize}
+
+\subsection{Otros}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Pasta Térmica:} Thermal Grizzly (\$10 aprox.)
+\end{itemize}
+
+\section*{Justificación Final}
+Entre todos los componentes, con su precio ideal, se alcanza una suma exacta de \$3000 netos, cumpliendo así con el objetivo del proyecto.
+
+La computadora posee sincronización \textit{Sweet Spot} entre su CPU y su RAM. La elección de memoria DDR5 a 6000 MHz no es arbitraria; es la frecuencia exacta que permite una sincronización 1:1 con el controlador de memoria de la arquitectura Zen 4 (CPU). Esto minimiza la latencia del sistema, algo crucial para simulaciones físicas.
+
+Su arquitectura de bus de datos sin bloqueo a la placa base X670E elimina los cuellos de botella. La GPU puede renderizar a plena potencia mientras el SSD guarda los \textit{frames} resultantes a 7000 MB/s, ya que ambos usan líneas PCIe dedicadas hacia la CPU.
+
+Por último, está el balance de carga híbrido porque la CPU es capaz de alimentar de geometría a la GPU RTX 4080 sin frenarla y los 64GB de RAM aseguran que el almacenamiento SSD no se use como memoria virtual lenta.
+
+\end{document}
