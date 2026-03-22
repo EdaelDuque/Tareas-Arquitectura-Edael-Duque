@@ -1,75 +1,88 @@
 .data
-    buffer: .space 100       # Espacio para el buffer circular
-    size:   .word 100
-    head:   .word 0
-    msg:    .asciiz "\nContenido del buffer: "
+    buffer: .space 1024      # Espacio para almacenar caracteres
+    head:   .word 0          # Puntero de escritura (índice)
+    msg:    .asciiz "\n--- Contenido del Buffer (20s) ---\n"
+    msg_fin: .asciiz "\n--- Buffer Vaciado. Reiniciando contador ---\n"
 
 .text
+.globl main
+
 main:
-    # Habilitar interrupciones de teclado (bit 1 de Receiver Control)
+
     li $t0, 0xFFFF0000
     li $t1, 2
     sw $t1, 0($t0)
 
-    # Habilitar interrupciones globales en Status Register (CP0)
     mfc0 $a0, $12
     ori  $a0, $a0, 0xFF01
     mtc0 $a0, $12
 
 loop_principal:
-    # Simulación de espera de 20 segundos
-    li $v0, 30          # Get system time
-    syscall
-    move $s0, $a0       # Guardar tiempo inicial en ms
 
-esperar_20s:
     li $v0, 30
     syscall
+    move $s0, $a0
+
+esperar_20s:
+
+    li $v0, 30
+    syscall
+    
+
     subu $t0, $a0, $s0
+    
+
     bltu $t0, 20000, esperar_20s
 
-    # Imprimir y vaciar
+ 
     li $v0, 4
     la $a0, msg
     syscall
-    jal vaciar_buffer
+
+    jal imprimir_y_vaciar
+
+    li $v0, 4
+    la $a0, msg_fin
+    syscall
+
     j loop_principal
 
-vaciar_buffer:
+#Proceso de impresión
+imprimir_y_vaciar:
     la $t0, buffer
     lw $t1, head
-    li $t2, 0           # Índice para vaciar
-imprimir_loop:
-    beq $t2, $t1, fin_vaciar
+    li $t2, 0
+
+bucle_print:
+    beq $t2, $t1, fin_print
     addu $t3, $t0, $t2
     lb $a0, 0($t3)
     li $v0, 11
     syscall
+    
     addi $t2, $t2, 1
-    j imprimir_loop
-fin_vaciar:
-    sw $zero, head      # Resetear puntero
+    j bucle_print
+
+fin_print:
+    sw $zero, head
     jr $ra
 
-# --- MANEJADOR DE INTERRUPCIONES ---
+#Manejador de interrupciones
 .ktext 0x80000180
-    # Leer el carácter del teclado
-    li $t0, 0xFFFF0004
-    lb $k0, 0($t0)
 
-    # Filtrar solo MAYÚSCULAS (A=65, Z=90)
-    blt $k0, 65, salir_k
-    bgt $k0, 90, salir_k
+    li $k0, 0xFFFF0004
+    lb $k1, 0($k0)
 
-    # Guardar en buffer circular
-    la $t1, buffer
-    lw $t2, head
-    addu $t3, $t1, $t2
-    sb $k0, 0($t3)
-    
-    # Actualizar head (simplificado: lineal hasta 100)
-    addi $t2, $t2, 1
-    sw $t2, head
+    blt $k1, 65, salir_int
+    bgt $k1, 90, salir_int
 
-salir_k:
-    eret
+    la $k0, buffer
+    lw $t8, head
+    addu $t9, $k0, $t8
+    sb $k1, 0($t9)
+
+    addi $t8, $t8, 1
+    sw $t8, head
+
+salir_int:
+    eret 
