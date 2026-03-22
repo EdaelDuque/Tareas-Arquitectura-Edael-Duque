@@ -1,4 +1,4 @@
-.data
+data
     # Direcciones de E/S mapeada
     TENSION_CTRL:   .word 0x10010300
     TENSION_ESTADO: .word 0x10010304
@@ -64,6 +64,12 @@ esperar_tension:
     bne $t1, $t2, esperar_tension
 
     # 3. Leer resultados y retornar
+    lw $t0, TENSION_SISTOL
+    lw $v0, 0($t0)          # Sistólica en $v0
+    lw $t0, TENSION_DIASTOL
+    lw $v1, 0($t0)          # Diastólica en $v1
+
+    jr $ra
     lw $t0, TENSION_SISTOL
     lw $v0, 0($t0)          # Sistólica en $v0
     lw $t0, TENSION_DIASTOL
